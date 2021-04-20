@@ -10,7 +10,7 @@ addUser.addEventListener("click", async () => {
   });
 
   const userDataJson = await userData.json(); //it is also asynchronous operation and a aSYNC operation
-  // console.log(userDataJson);
+
   const user = userDataJson.results[0];
   const userEl = document.createElement("div");
   userEl.innerHTML = `<div>
