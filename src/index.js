@@ -9,6 +9,18 @@ const searchInput = document.getElementById("search");
 
 const appState = [];
 
+class User {
+  constructor(title, firstname, lastname, gender, email) {
+    this.title = title;
+    this.name = `${firstname} ${lastname}`;
+    this.gender = gender;
+    this.email = email;
+  }
+}
+
+// function User(){} -constructors intead of class
+// User.prototype.method-to add additional methods
+
 addUser.addEventListener("click", async () => {
   const userData = await fetch(api, {
     method: "GET"
@@ -17,7 +29,15 @@ addUser.addEventListener("click", async () => {
   const userDataJson = await userData.json(); //it is also asynchronous operation and a aSYNC operation
   const user = userDataJson.results[0];
 
-  appState.push(user);
+  const classUser = new User(
+    user.name.title,
+    user.name.first,
+    user.name.last,
+    user.gender,
+    user.email
+  );
+
+  appState.push(classUser); //state has new classes
   // console.log(appState);
   domRender(appState);
 });
@@ -27,7 +47,7 @@ const domRender = (stateArr) => {
   stateArr.forEach((userObj) => {
     const userEl = document.createElement("div");
     userEl.innerHTML = `<div>
-    Name : ${userObj.name.title} ${userObj.name.first} ${userObj.name.last}
+    Name : ${userObj.title} ${userObj.name} 
     <ol>
       <li>${userObj.gender}</li>
       <li>${userObj.email}</li> 
@@ -41,8 +61,7 @@ const domRender = (stateArr) => {
 searchInput.addEventListener("keyup", (e) => {
   const filterAppState = appState.filter(
     (user) =>
-      user.name.first.toLowerCase().includes(searchInput.value.toLowerCase()) ||
-      user.name.last.toLowerCase().includes(searchInput.value.toLowerCase()) ||
+      user.name.toLowerCase().includes(searchInput.value.toLowerCase()) ||
       user.gender.toLowerCase().includes(searchInput.value.toLowerCase()) ||
       user.email.toLowerCase().includes(searchInput.value.toLowerCase())
   );
@@ -51,16 +70,12 @@ searchInput.addEventListener("keyup", (e) => {
 
 sortascbtn.addEventListener("click", () => {
   const tempappState = [...appState];
-  tempappState.sort(function (a, b) {
-    return a.name.first.localeCompare(b.name.first);
-  });
+  tempappState.sort((a, b) => (a.name < b.name ? -1 : 1));
   domRender(tempappState);
 });
 
 sortdscbtn.addEventListener("click", () => {
   const tempappState = [...appState];
-  tempappState.sort(function (a, b) {
-    return b.name.first.localeCompare(a.name.first);
-  });
+  tempappState.sort((a, b) => (a.name < b.name ? 1 : -1));
   domRender(tempappState);
 });
