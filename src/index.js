@@ -26,7 +26,11 @@ const domRender = (stateArr) => {
   stateArr.forEach((userObj) => {
     const userEl = document.createElement("div");
     userEl.innerHTML = `<div>
-    ${userObj.name.title} ${userObj.name.first} ${userObj.name.last}
+    Name : ${userObj.name.title} ${userObj.name.first} ${userObj.name.last}
+    <ol>
+      <li>${userObj.gender}</li>
+      <li>${userObj.email}</li> 
+    </ol> 
     </div>`;
 
     userList.appendChild(userEl);
@@ -34,8 +38,12 @@ const domRender = (stateArr) => {
 };
 
 searchInput.addEventListener("keyup", (e) => {
-  const filterAppState = appState.filter((user) =>
-    user.name.first.toLowerCase().includes(searchInput.value.toLowerCase())
+  const filterAppState = appState.filter(
+    (user) =>
+      user.name.first.toLowerCase().includes(searchInput.value.toLowerCase()) ||
+      user.name.last.toLowerCase().includes(searchInput.value.toLowerCase()) ||
+      user.gender.toLowerCase().includes(searchInput.value.toLowerCase()) ||
+      user.email.toLowerCase().includes(searchInput.value.toLowerCase())
   );
   domRender(filterAppState);
 });
