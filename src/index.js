@@ -26,7 +26,7 @@ addUser.addEventListener("click", async () => {
     method: "GET"
   });
 
-  const userDataJson = await userData.json(); //it is also asynchronous operation and a aSYNC operation
+  const userDataJson = await userData.json(); //it is also asynchronous operation and a ASYNC operation
   const user = userDataJson.results[0];
 
   const classUser = new User(
@@ -38,7 +38,6 @@ addUser.addEventListener("click", async () => {
   );
 
   appState.push(classUser); //state has new classes
-  // console.log(appState);
   domRender(appState);
 });
 
