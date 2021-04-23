@@ -19,7 +19,7 @@ class User {
 }
 
 // function User(){} -constructors intead of class
-// User.prototype.method-to add additional methods
+// User.prototype.method-to add the additional methods
 
 addUser.addEventListener("click", async () => {
   const userData = await fetch(api, {
